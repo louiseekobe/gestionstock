@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="border p-2">
+      <p>
+        Details Ventes
+      </p>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Nom</th>
+      <th class="text-center">Prenom</th>
+      <th class="text-center">Telephone</th>
+      <th class="text-center">Ventes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let re of result">
+      <td class="text-center"><span>{{re.clId}}</span></td>
+      <td class="text-center"><span>{{re.clNom}}</span></td>
+      <td class="text-center"><span>{{re.clPrenom}}</span></td>
+      <td class="text-center"><span>{{re.clTel}}</span></td>
+      <td class="text-center" >
+        <span>Detail ventes : </span>
+        <ul *ngFor = "let li of re.listLigne">
+          <li> Date : {{ li.cdDate | date: "dd/MMMM/YYYY  HH:mm"}} , Montant: {{li.montant}} </li>
+          <span>Detail Produits : </span>
+          <ul *ngFor = "let lit of li.listLigne">
+            <li> Quantité : {{ lit.quantitecmd}} , Nom du produit: {{nomProduit(lit.numProd)}} </li>
+          </ul>
+        </ul> 
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,8 @@
+
+<div class="d-flex flex-row justify-content-between nav">
+  <h3 class="align-self-center">Bienvenue <i class="fa fa-user"></i><span *ngIf="user"> {{user.userNom}}</span> </h3>
+  <div class="align-self-center" (click)="logOut()">
+    <i class="fa fa-sign-out"></i>
+    deconnexion
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="border p-2">
+      <p>
+        Details approvisionnement
+      </p>
+      <p>
+        <input type="text" [(ngModel)]= 'search' placeholder="entrer le mois">
+      </p>
+      
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Nom</th>
+      <th class="text-center">Prenom</th>
+      <th class="text-center">Telephone</th>
+      <th class="text-center">Commandes</th>
+      <th class="text-center">Produits</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let re of result">
+      <td class="text-center"><span>{{re.frId}}</span></td>
+      <td class="text-center"><span>{{re.frNom}}</span></td>
+      <td class="text-center"><span>{{re.frPrenom}}</span></td>
+      <td class="text-center"><span>{{re.frTel}}</span></td>
+      <td class="text-center" >
+        <span>Detail commandes : </span>
+        <ul *ngFor = "let li of re.listCommandeFr">
+          <li> Date : {{ li.cdFrdate | date: "dd/MMMM/YYYY  HH:mm"}} , Montant: {{li.montant}} </li>
+        </ul> 
+      </td>
+      <td class="text-center" >
+        <span>Detail produits : </span>
+        <ul *ngFor = "let li of re.listProduit">
+          <li> Nom : {{ li.prodNom}} , Achat: {{li.prixachat}} </li>
+        </ul> 
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

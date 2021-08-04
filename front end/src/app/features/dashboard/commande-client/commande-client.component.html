@@ -1,0 +1,198 @@
+<div class="container">
+  <div class="border p-2">
+    <button class="btn btn-md btn-outline-success" (click)="open(content)">
+      <i class="fa fa-shopping-cart"></i> ajouter une vente </button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Date </th>
+      <th class="text-center">Montant </th>
+      <th class="text-center">Liste de commande</th>
+      <th class="text-center">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cmd of cmds">
+      <td class="text-center"><span>{{cmd.cdId}}</span></td>
+      <td class="text-center"><span>{{cmd.cdDate | date: "dd/MMMM/YYYY  HH:mm"}}</span></td>
+      <td class="text-center"><span>{{cmd.montant}}</span></td>
+      <td class="text-center" >
+        <span>Detail commandes : </span>
+        <ul *ngFor = "let li of cmd.listLigne">
+          <li> Ligne : {{ li.lcmdClId}} , Quantité: {{li.quantitecmd}} , Code : {{li.numProd}}</li>
+        </ul> 
+      </td>
+      <td class="text-center">
+        <button class="btn btn-sm btn-info m-1" (click)="openDetails(contentDetails, cmd )">
+          <i class="fa fa-search"></i>Details</button>
+        <button class="btn btn-sm btn-warning m-1" (click)="openEdit(contentEdit, cmd)">
+          <i class="fa fa-edit"></i>Edit</button>
+        <button class="btn btn-sm btn-danger m-1" (click)="openDelete(contentDelete, cmd)">
+          <i class="fa fa-remove"></i>Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- add new commande -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvelle commande</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='cmdForm' (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Date </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'cdDate'>
+        </div>
+      </div>
+      <hr>
+      <button (click)='addLigne()' class="btn btn-primary" type="button">Ajouter Ligne commande </button>
+      <div formArrayName='listLigne'>
+        <div [formGroupName]='index' *ngFor='let ligne of listLigne.controls; 
+          let index = index'>
+          <div class="form-group d-flex flex-column">
+            <label>quantité</label>
+            <input formControlName='quantitecmd' type="number">
+          </div>
+          <div class="form-group d-flex flex-column">
+            <label>Produit</label>
+            <select class="form-control" formControlName = 'numProd'>
+              <option *ngFor= "let prod of prods">{{prod.prodId}}</option>
+            </select>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Client</label>
+        <select class="form-control" formControlName = 'cl' >
+          <option *ngFor= "let cl of cls" [ngValue]="cl">{{cl.clNom}}</option>
+        </select>
+      </div>
+      <div class="text-center p-2">
+        <button data-dismiss="modal" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    <!-- <p *nfIf="mgs" class="text-danger">{{mgs}}</p> -->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+
+<!-- details friend -->
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Detail commande client</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='cmdForm' (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Date </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'cdDate'>
+        </div>
+      </div>
+      <hr>
+      <button (click)='addLigne()' class="btn btn-primary" type="button">Ajouter Ligne commande </button>
+      <div formArrayName='listLigne'>
+        <div [formGroupName]='index' *ngFor='let ligne of listLigne.controls; 
+          let index   = index'>
+          <div class="form-group d-flex flex-column">
+            <label>quantité</label>
+            <input formControlName='quantitecmd' type="number">
+          </div>
+          <div class="form-group d-flex flex-column">
+            <label>Produit</label>
+            <select class="form-control" formControlName = 'numProd' >
+              <option *ngFor= "let prod of prods" >{{prod.prodId}}</option>
+            </select>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Client</label>
+        <select class="form-control" formControlName = 'cl'>
+          <option *ngFor= "let cl of cls" [ngValue]="cl">{{cl.clNom}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+<!-- edit friend -->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editer commande client</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='cmdForm' (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Date </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'cdDate'>
+        </div>
+      </div>
+      <hr>
+      <button (click)='addLigne()' class="btn btn-primary" type="button">Ajouter Ligne commande </button>
+      <div formArrayName='listLigne'>
+        <div [formGroupName]='index' *ngFor='let ligne of listLigne.controls; 
+          let index   = index'>
+          <div class="form-group d-flex flex-column">
+            <label>quantité</label>
+            <input formControlName='quantitecmd' type="number">
+          </div>
+          <div class="form-group d-flex flex-column">
+            <label>Produit</label>
+            <select class="form-control" formControlName = 'numProd'>
+              <option *ngFor= "let prod of prods" >{{prod.prodId}}</option>
+            </select>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Client</label>
+        <select class="form-control" formControlName = 'cl' >
+          <option *ngFor= "let cl of cls" [ngValue]="cl">{{cl.clNom}}</option>
+        </select>
+      </div>
+      <div class="text-center p-2">
+        <button data-dismiss="modal" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+<!-- delete modal -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Suppression commande client</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <button data-dismiss="modal" class="btn btn-info" (click)="deleteCommande()">Confirmer</button>
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+
+

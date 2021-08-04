@@ -1,0 +1,19 @@
+.nav {
+  height: 4rem;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(26, 111, 118, 1) 50%,
+    rgba(40, 30, 101, 1) 100%,
+    rgba(125, 185, 232, 1) 100%
+  );
+  padding: 0 55px;
+  color: white;
+  div:hover {
+    cursor: pointer;
+    color: yellow;
+    i {
+      color: yellow;
+    }
+  }
+}

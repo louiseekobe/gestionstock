@@ -1,0 +1,13 @@
+package com.gestion_stock.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.gestion_stock.model.Fournisseur;
+
+public interface FournisseurRepository extends JpaRepository<Fournisseur, Integer>{
+	
+	public Fournisseur findByFrTel(String frTel);
+	
+	public Fournisseur findByEmail(String email);
+
+}

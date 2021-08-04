@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="border p-2">
+    <button class="btn btn-md btn-outline-success" (click)="open(content)">
+      ajouter une categorie</button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Nom </th>
+      <th class="text-center">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cate of cats">
+      <td class="text-center"><span>{{cate.catId}}</span></td>
+      <td class="text-center"><span>{{cate.catNom}}</span></td>
+      <td class="text-center">
+        <button class="btn btn-sm btn-info m-1" (click)="openDetails(contentDetails, cate)">
+          <i class="fa fa-search"></i>Details</button>
+        <button class="btn btn-sm btn-warning m-1" (click)="openEdit(contentEdit, cate)">
+          <i class="fa fa-edit"></i>Edit</button>
+        <button class="btn btn-sm btn-danger m-1" (click)="openDelete(contentDelete, cate)">
+          <i class="fa fa-remove"></i>Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- add new friend -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nouvelle categorie</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='catForm' (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Nom </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'catNom'>
+        </div>
+      </div>
+      <div class="text-center p-2">
+        <button data-dismiss="modal" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    <p *nfIf="mgs" class="text-danger">{{mgs}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+
+<!-- details friend -->
+<ng-template #contentDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Detail categorie</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='catForm'>
+      <div class="form-group">
+        <label>Nom </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'catNom'>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+<!-- edit friend -->
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Editer categorie</h4>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]='catForm' (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Nom </label>
+        <div class="input-group">
+          <input class="form-control" formControlName = 'catNom'>
+        </div>
+      </div>
+      <div class="text-center p-2">
+        <button data-dismiss="modal" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+<!-- delete modal -->
+<ng-template #contentDelete let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Suppression categorie</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center">
+      <button data-dismiss="modal" class="btn btn-info" (click)="deleteCategorie()">Confirmer</button>
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+  </div>
+</ng-template>
+
+
+
